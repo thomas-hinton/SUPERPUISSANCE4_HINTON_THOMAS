@@ -8,7 +8,7 @@ package com.mycompany.superpuissance4_hinton_baudoin;
  *
  * @Créated by Mr Baudoin et Mr Hinton 
  */
-//Création de la classe Jeton :
+//Définition de la classe "Jeton" :
 public class Jeton {
     private String couleur;
     
