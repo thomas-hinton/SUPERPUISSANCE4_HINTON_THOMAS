@@ -12,6 +12,5 @@ package com.mycompany.superpuissance4_hinton_baudoin;
 public class SUPERPUISSANCE4_HINTON_BAUDOIN {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
     }
 }
