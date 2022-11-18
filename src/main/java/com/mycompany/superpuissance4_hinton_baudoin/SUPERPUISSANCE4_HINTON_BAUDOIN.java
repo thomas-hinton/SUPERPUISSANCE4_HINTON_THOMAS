@@ -7,10 +7,10 @@ package com.mycompany.superpuissance4_hinton_baudoin;
 
 /**
  *
- * @author 33621
+ * @Créated by Mr Baudoin et Mr Hinton
  */
 public class SUPERPUISSANCE4_HINTON_BAUDOIN {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {    
     }
 }
