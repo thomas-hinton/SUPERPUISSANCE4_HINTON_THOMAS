@@ -34,7 +34,11 @@ public class CelluleDeGrille {
             return false ; 
         }
     }
-    
-    
-    
+    /**
+     * Accesseur en écriture qui permet de mettre à jour la valeur de notre attribut "jetonCourant"
+     * @param unjeton le Jeton à attribuer à la cellule 
+     */
+    public void affecterJeton(Jeton unjeton){
+        jetonCourant = unjeton;
+    }   
 }
