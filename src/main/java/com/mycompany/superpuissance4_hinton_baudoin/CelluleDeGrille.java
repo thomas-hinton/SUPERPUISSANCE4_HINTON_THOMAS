@@ -40,5 +40,38 @@ public class CelluleDeGrille {
      */
     public void affecterJeton(Jeton unjeton){
         jetonCourant = unjeton;
-    }   
+    }
+    /**
+     * Méthode qui permet de renvoyer la couleur du jeton sur la case
+     * @return "rouge" ou "jaune" ou "vide" 
+     */
+    public String lireCouleurDuJeton() {
+        if(jetonCourant != null){
+            return jetonCourant.lireCouleur();
+        }
+        else{
+            return "vide" ;
+        } 
+    }
+    /**
+     * Accesseur en écriture qui permet de affecter la valeur "true" à notre attribut "avoirTrouNoir" (ajouter un troue noir sur la cellue)
+     */
+    public void placerTrouNoir() {
+        avoirTrouNoir = true ;
+    }
+    /**
+     * Accesseur en écriture qui permet de affecter la valeur "false" à notre attribut "avoirTrouNoir" (supprimer un toue noir sur la cellule)
+     */
+    public void supprimerTrouNoir(){
+        avoirTrouNoir = false ;
+    }
+    /**
+     * Methode qui renvoie si un troue noir est présent ou pas
+     * @return "true" or "false" (type : boolean)
+     */
+    public boolean presenceTrouNoir(){
+        return avoirTrouNoir ;
+    }
+    
+    
 }
