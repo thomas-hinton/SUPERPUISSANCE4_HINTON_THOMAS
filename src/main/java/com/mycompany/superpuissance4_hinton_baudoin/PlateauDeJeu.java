@@ -51,8 +51,79 @@ public class PlateauDeJeu {
         return true ;
     }
     
+    /**
+     * Méthode permettant d'afficher la grille dans la console
+     */
+    public void afficherGrilleSurConsole(){
+        String grilleaffichage ="";                                           //Variable locale permettant de faciliter l'affichage de chaque lignes(incrémentée)
+        for (int i=0; i < 6; i++) {               
+            for (int j=0; j < 7; j++) {
+                grilleaffichage = grilleaffichage + "|" + grille[i][j] ;      //ecriture de la première ligne  
+            }
+            grilleaffichage += "|" +"\n" ;                                    //Permet de fermer la grille de manière esthétique et de retourner à la ligne                          
+        }
+        System.out.println(grilleaffichage) ;
+    }
+    /**
+     * Méthode permettant de savoir si une cellule de coordonées (x,y) est occupée
+     * @param x ligne de la celulle (type : int)
+     * @param y colonne de la cellule (type : int)
+     * @return "true" (si oui) or "false" (si non) (type : boolean)
+     */
+    public boolean presenceJeton(int x, int y){
+        return grille[x][y].presenceJeton() ;                               
+    }
     
+    /**
+     * Méthode permettant de connaitre la couleur du jeton qui occupe la cellule de coordonées (x,y)
+     * @param x ligne de la celulle (type : int)
+     * @param y colonne de la cellule (type : int)
+     * @return couleur du jeton (type : String)
+     */
+    public String lireCouleurDuJeton(int x, int y){
+        return grille[x][y].lireCouleurDuJeton() ;                            
+    }
     
+    /**
+     * Méthode permettant de savoir si une couleur est gagante
+     * @param couleur couleur du potentiel gagant à tester
+     * @return "true" (si gagné) "false" (si pas gagné) (type : boolean)
+     */
+    public boolean etreGagnantePourCouleur(String couleur){
+        //Teste sur les lignes
+        for (int i=0; i < 6 ; i++){                 
+            for (int j=0; j < 4 ; j++){
+                if((lireCouleurDuJeton(i,j) == couleur) && (lireCouleurDuJeton(i,j+1) == couleur) && (lireCouleurDuJeton(i,j+2) == couleur) && (lireCouleurDuJeton(i,j+3) == couleur)){
+                   return true ; 
+                }
+            }
+        }
+        //Teste sur les colonnes
+        for (int i=0; i < 3 ; i++){
+            for (int j=0; j < 6 ; j++){
+                if((lireCouleurDuJeton(i,j) == couleur) && (lireCouleurDuJeton(i+1,j) == couleur) && (lireCouleurDuJeton(i+2,j) == couleur) && (lireCouleurDuJeton(i+3,j) == couleur)){
+                   return true ; 
+                }
+            }
+        }
+        //Teste sur les diagonales descendantes
+        for (int i=0; i < 3 ; i++){
+            for (int j=0; j < 4 ; j++){
+                if((lireCouleurDuJeton(i,j) == couleur) && (lireCouleurDuJeton(i+1,j+1) == couleur) && (lireCouleurDuJeton(i+2,j+2) == couleur) && (lireCouleurDuJeton(i+3,j+3) == couleur)){
+                   return true ; 
+                }
+            }
+        }
+        //Teste sur les diagonales montantes
+        for (int i=0; i < 3 ; i++){
+            for (int j=0; j < 4 ; j++){
+                if((lireCouleurDuJeton(5-i,j) == couleur) && (lireCouleurDuJeton(4-i,j+1) == couleur) && (lireCouleurDuJeton(3-i,j+2) == couleur) && (lireCouleurDuJeton(2-i,j+3) == couleur)){
+                   return true ; 
+                }
+            }
+        }
+        return false ;
+    }
     
     
     
