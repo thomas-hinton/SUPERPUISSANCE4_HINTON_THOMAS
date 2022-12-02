@@ -125,11 +125,71 @@ public class PlateauDeJeu {
         return false ;
     }
     
+    /**
+     * Méthode permettant de tasser une colonne lorsque un jeton est détruit/suprimé
+     * @param j colonne que l'on souhaite tasser (type : int)
+     */
+    public void tasserColonne(int j){
+        for (int i=0; i < 5 ; i++){                     //On ne s'occupe pas de la premiere ligne (en effet il n'y a pas de lignes au dessus)
+            if(presenceJeton(6-i,j) == false){
+                grille[5-i][j] = grille[4-i][j] ;
+                grille[4-i][j].supprimerJeton();
+            }
+        }
+    }
     
+    /**
+     * Méthode permettant de savoir si une colonne est remplie ou non
+     * @param j la colonne 
+     * @return "true" (si oui) "false" (si non) (type : boolean)
+     */
+    public boolean colonneRemplie(int j){
+        return presenceJeton(0,j) ;
+    }
     
+    /**
+     * Méthode permettant de placer un trounoir sur la grille au coordonées souhaitées
+     * @param x ligne souhaitée (type : int)
+     * @param y colonne souhaitée (type : int)
+     */
+    public void placerTrouNoir(int x, int y){
+        grille[x][y].placerTrouNoir();
+    }
     
+    /**
+     * Méthode permettant de supprimer un trounoir sur la grille au coordonées souhaitées
+     * @param x ligne souhaitée (type : int)
+     * @param y colonne souhaitée (type : int)
+     */
+    public void supprimerTrouNoir(int x, int y){
+        grille[x][y].supprimerTrouNoir();
+    }
     
+    /**
+     * Méthode permettant de placer un Desintegrateur sur la grille au coordonées souhaitées
+     * @param x ligne souhaitée (type : int)
+     * @param y colonne souhaitée (type : int)
+     */
+    public void placerDesintegrateur(int x,int y){
+        grille[x][y].placerDesintegrateur();
+    }
     
+    /**
+     * Méthode permettant de supprimer un jeton sur la grille au coordonées souhaitées
+     * @param x ligne souhaitée (type : int)
+     * @param y colonne souhaitée (tpe : int)
+     */
+    public void supprimerJeton(int x, int y){
+        grille[x][y].supprimerJeton();
+    }
     
+    /**
+     * Méthode permettant de récupérer un jeton sur la grille au coordonées souhaitées
+     * @param x ligne souhaitée (type : int)
+     * @param y colonne souhaitée (type int)
+     */
+    public void recupererJeton(int x, int y){
+        grille[x][y].recupererJeton();
+    }
     
 }
