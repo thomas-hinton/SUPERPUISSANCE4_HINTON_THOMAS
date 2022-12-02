@@ -26,4 +26,51 @@ public class joueur {
         nombreDesintegrateurs = 0 ;
     }
     
+    /**
+     * Méthode permettant d'attribuer une couleur à un joueur
+     * @param uneCouleur couleur souhaitée ("jaune" ou "rouge") (type : String) 
+     */
+    public void affecterCouleur(String uneCouleur){
+        couleur = uneCouleur ;
+    }
+    
+    /**
+     * Méthode permettant de indiquer le nombre de jetons restants au joueur
+     * @return le nombre de jetons restants (type : int)
+     */
+    public int nombreDeJetons(){
+        return reserveJetons.size() ;
+    }
+    
+    /**
+     * Méthode permettant d'ajouter un jeton à la reserve de jetons
+     * @param unJeton le jeton que l'on souhaite ajouter à la reserve (type : Jeton)
+     */
+    public void ajouterJeton(Jeton unJeton){
+        reserveJetons.add(unJeton) ;
+    }
+    
+    /**
+     * Méthode permettant de simuler le jeux d'un jeton. (retir 1 de la reserve et renvoie la référence vers ce jeton)
+     * @return référence du jeton (type : Jeton)
+     */
+    public Jeton jouerJeton(){
+        Jeton reference = reserveJetons.remove(0);
+        return reference ;
+    }
+    
+    /**
+     * Méthode permettant  d'incrémenter le nombre de désintégrateurs du joueur
+     */
+    public void obtenirDesintegrateur(){
+        nombreDesintegrateurs += 1 ;
+    }
+    
+    /**
+     * Méthode permettant de décrémenter le nombre de désintégrateurs du joueur
+     */
+    public void utiliserDesintegrateur(){
+        nombreDesintegrateurs -= 1 ;
+    }
+    
 }
