@@ -25,6 +25,13 @@ public class joueur {
         nom = nomjoueur ;
         nombreDesintegrateurs = 0 ;
     }
+    /**
+     * Accesseur en écriture qui permet d'acceder à la couleur de jeton du joueur
+     * @return la couleur du jeton (type : String)
+     */
+    public String lireCouleur() {
+        return couleur;
+    }
     
     /**
      * Méthode permettant d'attribuer une couleur à un joueur

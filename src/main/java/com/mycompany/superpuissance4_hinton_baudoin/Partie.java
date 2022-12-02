@@ -41,4 +41,14 @@ public class Partie {
             listeJoueurs[0].affecterCouleur("jaune") ;
         }
     }
+    
+    /**
+     * Méthode permettant de affecter 30 jeton de la couleur d'un joueur à ce joueur
+     * @param unjoueur le joueur à qui on souhaite affecter les jetons (type : joueur)
+     */
+    public void creerEtAffecterJeton(joueur unjoueur){
+        for (int i=0 ; i<30 ; i++){
+            unjoueur.ajouterJeton( new Jeton(unjoueur.lireCouleur()));
+        }
+    }
 }
