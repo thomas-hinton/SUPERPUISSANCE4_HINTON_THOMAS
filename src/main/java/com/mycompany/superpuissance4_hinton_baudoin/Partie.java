@@ -102,6 +102,19 @@ public class Partie {
         creerEtAffecterJeton(listeJoueurs[1]) ;
         placerTrousNoirsEtDesintegrateurs() ;
     } 
+    /**
+     * méthode qui renvoie la position du dernier jeton dans la colone (on suposse qu'il y au moins un jeton dans la colonne)
+     * @param colonne colonne à tester (type : int)
+     * @return ligne correspondante au dernier jeton inséré (type : int)
+     */
+    public int dernierjetoncolone(int colonne){
+        for (int i=0; i < 5 ; i++){
+            if(plateau.presenceJeton(5-i,colonne) == false){
+                return (6-i) ;
+            }
+        }
+        return 0 ;
+    }
 
     /**
      * Méthode qui permet à un joueur de jouer un jeton sur la grille
@@ -120,6 +133,12 @@ public class Partie {
             System.out.println("Erreur : colonne pleinne ou inexistante (veillez re-essayer)");
         }       
         plateau.ajouterJetonDansColonne(unjoueur.jouerJeton(),(colonne-1)) ;
+        //Teste la présence d'un trounoir sur case du jeton qui vient d'etre joué
+        int ligne = dernierjetoncolone(colonne-1) ;                                                 //Ligne sur laquelle se trouve le dernier jeton joué
+        if (plateau.presenceTrouNoir(ligne,(colonne-1)) == true){
+            plateau.supprimerJeton(ligne, (colonne-1)) ;
+            plateau.supprimerTrouNoir(ligne, (colonne-1)) ;
+        }
     }
     
     /**
@@ -139,9 +158,14 @@ public class Partie {
             else{
                 joueurCourant = listeJoueurs[0] ;
             }
+            if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){      //Teste si le joueur qui va s'apretter à jouer, à gagné grace au joueur précédent
+                gagnant = joueurCourant ;
+                break ;
+            }
             plateau.afficherGrilleSurConsole() ;                                                 //Permet d'afficher la grille au joueurs
             jouerJeton(joueurCourant);                                                    //Permet au joueur de jouer un jeton
-            if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){
+            
+            if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){     //Teste si le joueur qui vient de jouer à gagner
                 gagnant = joueurCourant ;
             }
         }
