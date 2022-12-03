@@ -12,5 +12,10 @@ package com.mycompany.superpuissance4_hinton_baudoin;
 public class SUPERPUISSANCE4_HINTON_BAUDOIN {
 
     public static void main(String[] args) {
+        joueur joueur1 = new joueur("thomas") ;              //création d'un joueur
+        joueur joueur2 = new joueur("arthur") ;              //Création d'un deuxième joueur
+        Partie unepartie = new Partie(joueur1, joueur2) ;            //Création d'une partie
+        unepartie.initialiserPartie() ;                   
+        unepartie.lancerPartie() ;
     }
 }

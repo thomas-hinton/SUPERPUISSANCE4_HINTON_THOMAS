@@ -5,6 +5,8 @@
 package com.mycompany.superpuissance4_hinton_baudoin;
 
 import java.util.Random;
+import java.util.Scanner;
+
 /**
  *
  * @author 33621
@@ -89,5 +91,62 @@ public class Partie {
                 i += 1 ;
             }
         }
+    }
+    
+    /**
+     * Méthode permettant d'initialiser une partie (remettre tout OK pour démarer une nouvelle partie)
+     */
+    public void initialiserPartie(){
+        attribuerCouleurAuxJoueurs() ;
+        creerEtAffecterJeton(listeJoueurs[0]) ;
+        creerEtAffecterJeton(listeJoueurs[1]) ;
+        placerTrousNoirsEtDesintegrateurs() ;
+    } 
+
+    /**
+     * Méthode qui permet à un joueur de jouer un jeton sur la grille
+     * @param unjoueur le joueur qui souhaite jouer
+     */
+    public void jouerJeton(joueur unjoueur) {
+        System.out.println("C'est au joueur " + unjoueur.lireCouleur() + " de jouer" + "\n" + "Il te reste " + unjoueur.nombreDeJetons() + " jetons" + "\n" + "Où souhaite-tu jouer? (colonnes 1 à 7)");
+        int colonne = -1 ;
+        //Récupère la colonne souhaitée par le joueur (vérifie si elle est bien dans la grille ou si elle est jouable)
+        while ((colonne < 1 || colonne >7) || plateau.colonneRemplie((colonne-1))){
+            Scanner sc = new Scanner(System.in) ;                                            
+            colonne = sc.nextInt();
+            if(colonne > 0 && colonne < 8 && plateau.colonneRemplie((colonne-1)) == false){
+                break ;
+            }
+            System.out.println("Erreur : colonne pleinne ou inexistante (veillez re-essayer)");
+        }       
+        plateau.ajouterJetonDansColonne(unjoueur.jouerJeton(),(colonne-1)) ;
+    }
+    
+    /**
+     * Méthode qui permet de jouer une partie
+     */
+    public void lancerPartie(){
+        //Choix aléatoire du joueur qui demarre la partie:
+        Random joueur = new Random() ;
+        joueurCourant =  listeJoueurs[joueur.nextInt(0,2)] ;
+        
+        //Boucle de jeu :
+        joueur gagnant = null;
+        while (gagnant == null){
+            if (joueurCourant == listeJoueurs[0]){                                               //Permet de changer de joueur à chaque tour de boucle
+                joueurCourant = listeJoueurs[1] ;                               
+            }
+            else{
+                joueurCourant = listeJoueurs[0] ;
+            }
+            plateau.afficherGrilleSurConsole() ;                                                 //Permet d'afficher la grille au joueurs
+            jouerJeton(joueurCourant);                                                    //Permet au joueur de jouer un jeton
+            if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){
+                gagnant = joueurCourant ;
+            }
+        }
+        //Annonce du gagnant :
+        plateau.afficherGrilleSurConsole() ;                                                    //Permet d'afficher la grille au joueurs
+        System.out.println("Le joueur " + gagnant.lireCouleur() + " à gagné !");
     }
 }
