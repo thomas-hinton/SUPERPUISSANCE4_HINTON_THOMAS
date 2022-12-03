@@ -75,6 +75,26 @@ public class PlateauDeJeu {
     }
     
     /**
+     * Méthode permettant de savoir si un trounoir est present sur une cellule de coordonées (x,y)
+     * @param x ligne de la cellule (type : int)
+     * @param y colonne de la cellule (type: int)
+     * @return "true" (si oui) or "false" (si non) (type : boolean)
+     */
+    public boolean presenceTrouNoir(int x, int y){
+        return grille[x][y].presenceTrouNoir() ;
+    }
+    
+    /**
+     * Méthode permettant de savoir si un desintegrateur est present sur une cellule de coordonées (x,y)
+     * @param x ligne de la cellule (type : int)
+     * @param y colonne de la cellule (type : int)
+     * @return  "true" (si oui) or "false" (si non) (type : boolean)
+     */
+    public boolean presenceDesintegrateur(int x, int y){
+        return grille[x][y].presenceDesintegrateur() ;
+    }
+    
+    /**
      * Méthode permettant de connaitre la couleur du jeton qui occupe la cellule de coordonées (x,y)
      * @param x ligne de la celulle (type : int)
      * @param y colonne de la cellule (type : int)
