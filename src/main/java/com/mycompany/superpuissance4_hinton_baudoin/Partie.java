@@ -51,4 +51,43 @@ public class Partie {
             unjoueur.ajouterJeton( new Jeton(unjoueur.lireCouleur()));
         }
     }
+    
+    /**
+     * Méthode permettant de placer 5 trounoir et 5 desintegrateurs (3 trounoir partagent la meme cellule que 3 desintegrateurs)
+     */
+    public void placerTrousNoirsEtDesintegrateurs(){
+        Random aleat1 = new Random() ;
+        Random aleat2 = new Random() ;
+        int x ;                                                                                                 //coordonée de la ligne
+        int y ;                                                                                                 //coordonée de la colone
+        int i = 0 ;                                                                                             //Variable incrémentée
+        //Ajout de 3 Trounoir et 3 Desintégrateurs cahés derrière les trounoir
+        while( i != 3) {
+            x = aleat1.nextInt(0,6) ;
+            y = aleat2.nextInt(0,7) ;
+            if (plateau.presenceTrouNoir(x,y) == false){                                                        //Teste si la cellule ne contient pas de trounoir
+                plateau.placerTrouNoir(x, y) ;
+                plateau.placerTrouNoir(x, y) ;
+                i += 1 ;
+            }
+        }
+        //Ajout de 2 Trounoir seuls
+        while (i != 5){
+            x = aleat1.nextInt(0,6) ;
+            y = aleat2.nextInt(0,7) ;
+            if (plateau.presenceTrouNoir(x, y) == false){                                                        //Teste si la cellule ne contient pas de trounoir
+                plateau.placerTrouNoir(x, y) ;
+                i += 1 ;
+            }
+        }
+        //Ajout de 2 Desintégrateurs seuls
+        while (i != 7){
+            x = aleat1.nextInt(0,6) ;
+            y = aleat2.nextInt(0,7) ;
+            if ((plateau.presenceTrouNoir(x,y) == false) && (plateau.presenceDesintegrateur(x, y) == false)){    //Teste si la cellule ne contient pas de desintégrateur et de trou noir
+                plateau.placerDesintegrateur(x, y) ;
+                i += 1 ;
+            }
+        }
+    }
 }
