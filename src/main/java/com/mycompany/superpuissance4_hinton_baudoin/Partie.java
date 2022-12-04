@@ -102,6 +102,7 @@ public class Partie {
         creerEtAffecterJeton(listeJoueurs[1]) ;
         placerTrousNoirsEtDesintegrateurs() ;
     } 
+    
     /**
      * méthode qui renvoie la position du dernier jeton dans la colone (on suposse qu'il y au moins un jeton dans la colonne)
      * @param colonne colonne à tester (type : int)
@@ -121,7 +122,7 @@ public class Partie {
      * @param unjoueur le joueur qui souhaite jouer
      */
     public void jouerJeton(joueur unjoueur) {
-        System.out.println("C'est au joueur " + unjoueur.lireCouleur() + " de jouer" + "\n" + "Il te reste " + unjoueur.nombreDeJetons() + " jetons" + "\n" + "Où souhaite-tu jouer? (colonnes 1 à 7)");
+        System.out.println("Où souhaite-tu jouer? (colonnes 1 à 7)");
         int colonne = -1 ;
         //Récupère la colonne souhaitée par le joueur (vérifie si elle est bien dans la grille ou si elle est jouable)
         while ((colonne < 1 || colonne >7) || plateau.colonneRemplie((colonne-1))){
@@ -139,6 +140,33 @@ public class Partie {
             plateau.supprimerJeton(ligne, (colonne-1)) ;
             plateau.supprimerTrouNoir(ligne, (colonne-1)) ;
         }
+    }
+    /**
+     * Méthode qui permet à un joueur de récuperer un de ses jetons
+     */
+    public void recupererunJetonPerso(joueur unjoueur){
+        Scanner uneligne = new Scanner(System.in) ;
+        Scanner unecolonne = new Scanner(System.in) ;
+        int ligne = 0;
+        int colonne =0;
+        boolean teste =false ;
+        while (teste != true){                                                                               //Boucle qui permet de s'assurer que le jeton existe vraiment et qu'il appartient bien au joueur
+            System.out.println("Quel jeton souhaite-tu récupérer ? ");
+            //Récupère les coordonées du jeton à récupérer 
+            while(ligne < 1 || ligne > 6){
+                System.out.println("ligne ? (1 à 6)");                                              //Permet dêtre sur que le jeton a retirer est bien sur une ligne de la grille
+                ligne = uneligne.nextInt();
+            }
+            while(colonne < 1 || colonne >7){
+               System.out.println("Colonne ? (1 à 7)");                                             //Permet dêtre sur que ke jeton à retirer est bien sur une colonne de la grille
+                colonne = unecolonne.nextInt(); 
+            }
+            if( (plateau.presenceJeton(ligne-1,colonne-1) == true) && (plateau.lireCouleurDuJeton(ligne-1, colonne-1) == unjoueur.lireCouleur())){ 
+                teste = true ;
+            }
+        }
+        unjoueur.ajouterJeton(plateau.recupererJeton(ligne-1, colonne-1)) ;                     //Permet de récupérer le Jeton sur la grille et de le redonner à son joueur  
+        plateau.tasserColonne(colonne-1);
     }
     
     /**
@@ -163,14 +191,22 @@ public class Partie {
                 break ;
             }
             plateau.afficherGrilleSurConsole() ;                                                 //Permet d'afficher la grille au joueurs
-            jouerJeton(joueurCourant);                                                    //Permet au joueur de jouer un jeton
-            
-            if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){     //Teste si le joueur qui vient de jouer à gagner
+            System.out.println("C'est au joueur " + joueurCourant.lireCouleur() + " de jouer" + "\n" + "Il te reste " + joueurCourant.nombreDeJetons() + " jetons" + "\n" + "Souaite-tu jouer un jeton(1), récupérer un jeton(2) ?");
+            int choix ;
+            Scanner sc = new Scanner(System.in) ;                                            
+            choix = sc.nextInt();
+            if (choix == 1){
+                jouerJeton(joueurCourant);                                                   //Permet au joueur de jouer un jeton
+            }
+            else{
+                recupererunJetonPerso( joueurCourant) ;                                     //Permet au joueur de recupérer un de ses jetons
+            }
+            if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){       //Teste si le joueur qui vient de jouer à gagner
                 gagnant = joueurCourant ;
             }
         }
         //Annonce du gagnant :
-        plateau.afficherGrilleSurConsole() ;                                                    //Permet d'afficher la grille au joueurs
+        plateau.afficherGrilleSurConsole() ;                                                       //Permet d'afficher la grille au joueurs
         System.out.println("Le joueur " + gagnant.lireCouleur() + " à gagné !");
     }
 }

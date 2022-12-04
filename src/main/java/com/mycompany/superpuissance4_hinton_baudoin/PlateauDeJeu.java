@@ -147,13 +147,15 @@ public class PlateauDeJeu {
     
     /**
      * Méthode permettant de tasser une colonne lorsque un jeton est détruit/suprimé
-     * @param j colonne que l'on souhaite tasser (type : int)
+     * @param colonne colonne que l'on souhaite tasser (type : int)
      */
-    public void tasserColonne(int j){
-        for (int i=0; i < 5 ; i++){                     //On ne s'occupe pas de la premiere ligne (en effet il n'y a pas de lignes au dessus)
-            if(presenceJeton(6-i,j) == false){
-                grille[5-i][j] = grille[4-i][j] ;
-                grille[4-i][j].supprimerJeton();
+    public void tasserColonne(int colonne){
+        for (int i=5; i>-1;i--){
+            if(presenceJeton(i, colonne) != true){
+                for (int j = i; j>0; j--){
+                    grille[j][colonne] = grille[j-1][colonne];
+                }
+                grille[0][colonne].supprimerJeton();
             }
         }
     }
@@ -208,8 +210,8 @@ public class PlateauDeJeu {
      * @param x ligne souhaitée (type : int)
      * @param y colonne souhaitée (type int)
      */
-    public void recupererJeton(int x, int y){
-        grille[x][y].recupererJeton();
+    public Jeton recupererJeton(int x, int y){
+        return grille[x][y].recupererJeton();
     }
     
 }
