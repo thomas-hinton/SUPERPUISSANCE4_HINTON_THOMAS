@@ -155,7 +155,7 @@ public class PlateauDeJeu {
                 for (int j = i; j>0; j--){
                     grille[j][colonne] = grille[j-1][colonne];
                 }
-                grille[0][colonne].supprimerJeton();
+                grille[0][colonne] = new CelluleDeGrille();
             }
         }
     }
@@ -194,6 +194,15 @@ public class PlateauDeJeu {
      */
     public void placerDesintegrateur(int x,int y){
         grille[x][y].placerDesintegrateur();
+    }
+    
+    /**
+     * Méthode permettant de supprimer un désintégrateur sur la grille au coordonées souhaitées
+     * @param x ligne souhaitée (type : int)
+     * @param y colonne souhaitée (type : int)
+     */
+    public void supprimerDesintegrateur(int x, int y){
+        grille[x][y].supprimerDesintegrateur();
     }
     
     /**

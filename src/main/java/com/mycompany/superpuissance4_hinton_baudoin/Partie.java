@@ -170,6 +170,35 @@ public class Partie {
     }
     
     /**
+     * Méthode permettant à un joueur de désintégrer un jeton adverse
+     * @param unjoueur joueur qui souhaite désintégrer un jeton (type :joueur)
+     */
+    public void utiliserDesintegrateur (joueur unjoueur){
+        Scanner uneligne = new Scanner(System.in) ;
+        Scanner unecolonne = new Scanner(System.in) ;
+        int ligne = 0;
+        int colonne =0;
+        boolean teste =false ;
+        while (teste != true){                                                                               //Boucle qui permet de s'assurer que le jeton existe vraiment et qu'il appartient bien au joueur
+            System.out.println("Quel jeton souhaite-tu désintégrer ? ");
+            //Récupère les coordonées du jeton à récupérer 
+            while(ligne < 1 || ligne > 6){
+                System.out.println("ligne ? (1 à 6)");                                              //Permet dêtre sur que le jeton a retirer est bien sur une ligne de la grille
+                ligne = uneligne.nextInt();
+            }
+            while(colonne < 1 || colonne >7){
+               System.out.println("Colonne ? (1 à 7)");                                             //Permet dêtre sur que ke jeton à retirer est bien sur une colonne de la grille
+                colonne = unecolonne.nextInt(); 
+            }
+            if( (plateau.presenceJeton(ligne-1,colonne-1) == true) && (plateau.lireCouleurDuJeton(ligne-1, colonne-1) != unjoueur.lireCouleur())){ 
+                teste = true ;
+            }
+        }
+        plateau.supprimerJeton(ligne -1, colonne-1);
+        plateau.tasserColonne(colonne-1);
+    }
+    
+    /**
      * Méthode qui permet de jouer une partie
      */
     public void lancerPartie(){
@@ -190,23 +219,55 @@ public class Partie {
                 gagnant = joueurCourant ;
                 break ;
             }
+            if (plateau.grilleRemplie() == true){
+                System.out.println("Grille remplie mais pas de gagant !");
+                break ;
+            }
             plateau.afficherGrilleSurConsole() ;                                                 //Permet d'afficher la grille au joueurs
-            System.out.println("C'est au joueur " + joueurCourant.lireCouleur() + " de jouer" + "\n" + "Il te reste " + joueurCourant.nombreDeJetons() + " jetons" + "\n" + "Souaite-tu jouer un jeton(1), récupérer un jeton(2) ?");
+            System.out.println("C'est au joueur " + joueurCourant.lireCouleur() + " de jouer" + "\n" + "Il te reste " + joueurCourant.nombreDeJetons()+ "\n" + "Il te reste " + joueurCourant.nombreDeDesintegrateur() + " désintégrateur" + "\n" + "Souaite-tu jouer un jeton(1), récupérer un jeton(2), utiliser désintégrateur(3) ?");
             int choix ;
             Scanner sc = new Scanner(System.in) ;                                            
             choix = sc.nextInt();
             if (choix == 1){
                 jouerJeton(joueurCourant);                                                   //Permet au joueur de jouer un jeton
             }
-            else{
+            else if (choix == 2){
                 recupererunJetonPerso( joueurCourant) ;                                     //Permet au joueur de recupérer un de ses jetons
             }
+            //utilisation désintégrateur :
+            else{
+                if(joueurCourant.nombreDeDesintegrateur() > 0){
+                   utiliserDesintegrateur(joueurCourant) ;                                  //Permet au joueur courant de désintégrer un pion adverse
+                   joueurCourant.utiliserDesintegrateur();
+                }
+                else{
+                    System.out.println("Erreur: Vous n'avez pas de désintégrateur");
+                }
+            }
+            //permet de récupérer un désintégrateur lorsque le jeu le permet
+            for (int i=0 ; i < 5 ; i++){
+                for (int j=0 ; i<6; i++){
+                    if ((plateau.presenceDesintegrateur(i, j) == true) && (plateau.presenceJeton(i, j) == true) && (plateau.presenceTrouNoir(i, j) == false)){
+                        if (plateau.lireCouleurDuJeton(i, j) == listeJoueurs[0].lireCouleur()){
+                            listeJoueurs[0].obtenirDesintegrateur();
+                            plateau.supprimerDesintegrateur(i, j);
+                        }
+                        else{
+                            listeJoueurs[1].obtenirDesintegrateur();
+                            plateau.supprimerDesintegrateur(i, j);
+                        }  
+                    }
+                }
+            }
+            
             if (plateau.etreGagnantePourCouleur(joueurCourant.lireCouleur()) == true){       //Teste si le joueur qui vient de jouer à gagner
                 gagnant = joueurCourant ;
             }
         }
         //Annonce du gagnant :
         plateau.afficherGrilleSurConsole() ;                                                       //Permet d'afficher la grille au joueurs
-        System.out.println("Le joueur " + gagnant.lireCouleur() + " à gagné !");
+        if (gagnant != null){
+            System.out.println("Le joueur " + gagnant.lireCouleur() + " à gagné !");
+        }
     }
 }

@@ -50,6 +50,14 @@ public class joueur {
     }
     
     /**
+     * Méthode permettant de indiquer le nombre de desintégrateur restant au joueur
+     * @return le nombre de jetons restants (type : int)
+     */
+    public int nombreDeDesintegrateur(){
+        return nombreDesintegrateurs ;
+    }
+    
+    /**
      * Méthode permettant d'ajouter un jeton à la reserve de jetons
      * @param unJeton le jeton que l'on souhaite ajouter à la reserve (type : Jeton)
      */
